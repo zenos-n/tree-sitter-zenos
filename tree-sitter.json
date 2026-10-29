@@ -2,31 +2,33 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "nix",
-      "camelcase": "Nix",
-      "title": "Nix",
-      "scope": "source.nix",
-      "file-types": ["nix"],
-      "injection-regex": "^nix$",
+      "name": "zenos",
+      "camelcase": "ZenOS",
+      "title": "ZenOS",
+      "scope": "source.zenos",
+      "file-types": [
+        "zcfg",
+        "zmdl",
+        "zpkg",
+        "zstr"
+      ],
+      "injection-regex": "^zenos$",
       "tags": "queries/tags.scm",
       "highlights": "queries/highlights.scm",
-      "class-name": "TreeSitterNix"
+      "class-name": "TreeSitterZenOS"
     }
   ],
   "metadata": {
     "version": "0.3.0",
     "license": "MIT",
-    "description": "Nix grammar for tree-sitter",
+    "description": "ZenOS DSL grammar, based on tree-sitter-nix",
     "authors": [
       {
         "name": "Charles Strahan",
         "email": "charles@cstrahan.com",
         "url": "https://www.cstrahan.com/"
       }
-    ],
-    "links": {
-      "repository": "https://github.com/nix-community/tree-sitter-nix"
-    }
+    ]
   },
   "bindings": {
     "c": true,

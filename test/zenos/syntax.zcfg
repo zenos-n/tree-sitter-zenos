@@ -1,0 +1,14 @@
+# All ZenOS statement forms, including names also used as action scopes.
+_import "base.zcfg";
+_import base: $type.attrs = ./base.zcfg;
+import $pkgs.legacy.hello;
+_let serialize: $type.function "string" = v: let s = $lib.toString v; in s;
+version = 1.0.0Nb;
+packages ++ [ $pkgs.hello ];
+packages -- [ $pkgs.old ];
+(freeform nixpkgs) = { allowUnfree = true; };
+s! [ $cfg.enable ] { users.($f.user).enable = true; };
+u!! { message = "hello ${$f.user}"; };
+! { enabled = true; };
+if $cfg.enable { value = 1; };
+inherit ($lib) map;

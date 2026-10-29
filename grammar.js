@@ -20,7 +20,7 @@ const PREC = {
 };
 
 module.exports = grammar({
-  name: "nix",
+  name: "zenos",
 
   extras: ($) => [/\s/, $.comment],
 
@@ -39,16 +39,16 @@ module.exports = grammar({
 
   word: ($) => $.keyword,
 
-  conflicts: ($) => [],
+  conflicts: ($) => [[$._expr_op, $.apply_expression]],
 
   rules: {
-    source_code: ($) => optional(field("expression", $._expression)),
+    source_code: ($) => repeat($._statement),
     _expression: ($) => $._expr_function_expression,
 
     // Keywords go before identifiers to let them take precedence when both are expected.
     // Workaround before https://github.com/tree-sitter/tree-sitter/pull/246
     keyword: ($) => /if|then|else|let|inherit|in|rec|with|assert/,
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\'\-]*/,
+    identifier: ($) => /\$?[a-zA-Z_][a-zA-Z0-9_\'\-]*/,
 
     variable_expression: ($) => field("name", $.identifier),
     integer_expression: ($) => /[0-9]+/,
@@ -284,6 +284,7 @@ module.exports = grammar({
         $.variable_expression,
         $.integer_expression,
         $.float_expression,
+        $.version_expression,
         $.string_expression,
         $.indented_string_expression,
         $.path_expression,
@@ -344,12 +345,17 @@ module.exports = grammar({
       ),
     _indented_escape_sequence: ($) => token.immediate(/'''|''\\([^$]|\s)/), // Can also escape newline.
 
-    binding_set: ($) =>
-      repeat1(field("binding", choice($.binding, $.inherit, $.inherit_from))),
+    version_expression: ($) => token(prec(1, /[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9._-]*/)),
+    _statement: ($) => choice($.binding, $.inherit, $.inherit_from, $.import_statement, $.let_statement, $.action_statement, $.conditional_statement),
+    import_statement: ($) => seq(choice("_import", "import"), optional(seq(field("name", $.identifier), optional(seq(":", field("type", $._expression))), "=")), field("value", $._expression), ";"),
+    let_statement: ($) => seq("_let", field("name", $.identifier), ":", field("type", $._expression), "=", field("value", $._expression), ";"),
+    action_statement: ($) => seq(field("operator", choice("!", "!!", /[su]\s*!{1,2}/)), optional($.list_expression), field("body", $.attrset_expression), ";"),
+    conditional_statement: ($) => seq("if", field("condition", $._expr_op), field("body", $.attrset_expression), ";"),
+    binding_set: ($) => repeat1(field("binding", $._statement)),
     binding: ($) =>
       seq(
         field("attrpath", $.attrpath),
-        "=",
+        choice("=", "++", "--"),
         field("expression", $._expression),
         ";",
       ),
@@ -368,7 +374,7 @@ module.exports = grammar({
       sep1(
         field(
           "attr",
-          choice($.identifier, $.string_expression, $.interpolation),
+          choice($.identifier, $.string_expression, $.interpolation, $.parenthesized_expression),
         ),
         ".",
       ),

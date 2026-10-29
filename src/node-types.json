@@ -96,10 +96,54 @@
         "named": true
       },
       {
+        "type": "version_expression",
+        "named": true
+      },
+      {
         "type": "with_expression",
         "named": true
       }
     ]
+  },
+  {
+    "type": "action_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "attrset_expression",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!!",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "list_expression",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "apply_expression",
@@ -167,6 +211,10 @@
           },
           {
             "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -237,6 +285,10 @@
           },
           {
             "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -344,6 +396,10 @@
             "named": true
           },
           {
+            "type": "version_expression",
+            "named": true
+          },
+          {
             "type": "with_expression",
             "named": true
           }
@@ -375,6 +431,10 @@
           },
           {
             "type": "interpolation",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
             "named": true
           },
           {
@@ -482,6 +542,10 @@
           },
           {
             "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -631,6 +695,10 @@
           {
             "type": "variable_expression",
             "named": true
+          },
+          {
+            "type": "version_expression",
+            "named": true
           }
         ]
       }
@@ -671,7 +739,19 @@
         "required": true,
         "types": [
           {
+            "type": "action_statement",
+            "named": true
+          },
+          {
             "type": "binding",
+            "named": true
+          },
+          {
+            "type": "conditional_statement",
+            "named": true
+          },
+          {
+            "type": "import_statement",
             "named": true
           },
           {
@@ -680,6 +760,112 @@
           },
           {
             "type": "inherit_from",
+            "named": true
+          },
+          {
+            "type": "let_statement",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "conditional_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "attrset_expression",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "apply_expression",
+            "named": true
+          },
+          {
+            "type": "attrset_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "float_expression",
+            "named": true
+          },
+          {
+            "type": "has_attr_expression",
+            "named": true
+          },
+          {
+            "type": "hpath_expression",
+            "named": true
+          },
+          {
+            "type": "indented_string_expression",
+            "named": true
+          },
+          {
+            "type": "integer_expression",
+            "named": true
+          },
+          {
+            "type": "let_attrset_expression",
+            "named": true
+          },
+          {
+            "type": "list_expression",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
+            "named": true
+          },
+          {
+            "type": "rec_attrset_expression",
+            "named": true
+          },
+          {
+            "type": "select_expression",
+            "named": true
+          },
+          {
+            "type": "spath_expression",
+            "named": true
+          },
+          {
+            "type": "string_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "uri_expression",
+            "named": true
+          },
+          {
+            "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -839,6 +1025,10 @@
             "named": true
           },
           {
+            "type": "version_expression",
+            "named": true
+          },
+          {
             "type": "with_expression",
             "named": true
           }
@@ -959,6 +1149,10 @@
           {
             "type": "variable_expression",
             "named": true
+          },
+          {
+            "type": "version_expression",
+            "named": true
           }
         ]
       },
@@ -1018,6 +1212,42 @@
         ]
       },
       "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "import_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "value": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1254,6 +1484,10 @@
             "named": true
           },
           {
+            "type": "version_expression",
+            "named": true
+          },
+          {
             "type": "with_expression",
             "named": true
           }
@@ -1269,6 +1503,42 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "let_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1337,6 +1607,10 @@
           },
           {
             "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -1470,6 +1744,10 @@
           {
             "type": "variable_expression",
             "named": true
+          },
+          {
+            "type": "version_expression",
+            "named": true
           }
         ]
       },
@@ -1532,6 +1810,10 @@
           {
             "type": "variable_expression",
             "named": true
+          },
+          {
+            "type": "version_expression",
+            "named": true
           }
         ]
       }
@@ -1541,17 +1823,40 @@
     "type": "source_code",
     "named": true,
     "root": true,
-    "fields": {
-      "expression": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "_expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "action_statement",
+          "named": true
+        },
+        {
+          "type": "binding",
+          "named": true
+        },
+        {
+          "type": "conditional_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "inherit",
+          "named": true
+        },
+        {
+          "type": "inherit_from",
+          "named": true
+        },
+        {
+          "type": "let_statement",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1663,6 +1968,10 @@
           },
           {
             "type": "variable_expression",
+            "named": true
+          },
+          {
+            "type": "version_expression",
             "named": true
           }
         ]
@@ -1800,6 +2109,10 @@
             "named": true
           },
           {
+            "type": "version_expression",
+            "named": true
+          },
+          {
             "type": "with_expression",
             "named": true
           }
@@ -1819,6 +2132,10 @@
   },
   {
     "type": "!",
+    "named": false
+  },
+  {
+    "type": "!!",
     "named": false
   },
   {
@@ -1867,6 +2184,10 @@
   },
   {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": "--",
     "named": false
   },
   {
@@ -1934,6 +2255,14 @@
     "named": false
   },
   {
+    "type": "_import",
+    "named": false
+  },
+  {
+    "type": "_let",
+    "named": false
+  },
+  {
     "type": "assert",
     "named": false
   },
@@ -1968,6 +2297,10 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "import",
     "named": false
   },
   {
@@ -2012,6 +2345,10 @@
   },
   {
     "type": "uri_expression",
+    "named": true
+  },
+  {
+    "type": "version_expression",
     "named": true
   },
   {
